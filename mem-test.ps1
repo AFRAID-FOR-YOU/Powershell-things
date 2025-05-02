@@ -4,6 +4,18 @@ $testlimitUrl = "https://github.com/AFRAID-FOR-YOU/Powershell-things/raw/refs/he
 $testlimitPath = "$targetDirectory\Testlimit64.exe"
 $testArgs = "-h -c 500000"  # Stress handles. Adjust count cautiously.
 
+# Accept Sysinternals EULA automatically
+try {
+    $regPath = "HKCU:\Software\Sysinternals\Testlimit"
+    if (-not (Test-Path $regPath)) {
+        New-Item -Path $regPath -Force | Out-Null
+    }
+    Set-ItemProperty -Path $regPath -Name "EulaAccepted" -Value 1 -Type DWord
+    Write-Host "EULA accepted for Testlimit."
+} catch {
+    Write-Warning "Failed to set EULA registry key: $_"
+}
+
 # Ensure directory exists
 if (-Not (Test-Path -Path $targetDirectory)) {
     Write-Host "Creating directory: $targetDirectory"

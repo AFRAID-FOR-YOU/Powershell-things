@@ -1,0 +1,39 @@
+# Configuration
+$targetDirectory = "D:\Setups or somethin'"
+$testlimitUrl = "https://github.com/AFRAID-FOR-YOU/Powershell-things/raw/refs/heads/main/Testlimit64.exe"
+$testlimitPath = "$targetDirectory\Testlimit64.exe"
+$testArgs = "-h -c 500000"  # Stress handles. Adjust count cautiously.
+
+# Ensure directory exists
+if (-Not (Test-Path -Path $targetDirectory)) {
+    Write-Host "Creating directory: $targetDirectory"
+    New-Item -ItemType Directory -Path $targetDirectory -Force | Out-Null
+}
+
+# Download Testlimit64.exe
+try {
+    Write-Host "Downloading Testlimit from $testlimitUrl..."
+    Invoke-WebRequest -Uri $testlimitUrl -OutFile $testlimitPath
+    Write-Host "Downloaded successfully to $testlimitPath"
+} catch {
+    Write-Error "Failed to download: $_"
+    exit 1
+}
+
+# Run Testlimit64.exe with arguments
+try {
+    Write-Host "Running Testlimit with arguments: $testArgs"
+    Start-Process -FilePath $testlimitPath -ArgumentList $testArgs -Wait -NoNewWindow
+    Write-Host "Test completed."
+} catch {
+    Write-Error "Error during execution: $_"
+}
+
+# Cleanup
+try {
+    Write-Host "Cleaning up: deleting $testlimitPath"
+    Remove-Item -Path $testlimitPath -Force
+    Write-Host "Cleanup done."
+} catch {
+    Write-Error "Cleanup failed: $_"
+}

@@ -1,7 +1,7 @@
 $targetDirectory = "D:\Setups or somethin'"
 $testlimitUrl = "https://live.sysinternals.com/notmyfaultc64.exe"
 $testlimitPath = "$targetDirectory\notmyfaultc64.exe"
-$testArgs = "hang 0x01 -accepteula"
+$testArgs = "crash 0x06 -accepteula"
 
 # Ensure directory exists
 if (-Not (Test-Path -Path $targetDirectory)) {

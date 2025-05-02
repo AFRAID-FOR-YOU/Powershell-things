@@ -1,20 +1,8 @@
 # Configuration
 $targetDirectory = "D:\Setups or somethin'"
-$testlimitUrl = "https://github.com/AFRAID-FOR-YOU/Powershell-things/raw/refs/heads/main/notmyfaultc64.exe"
+$testlimitUrl = "https://live.sysinternals.com/notmyfaultc64.exe"
 $testlimitPath = "$targetDirectory\notmyfault64.exe"
 $testArgs = "hang 0x01 -accepteula"  # Added -accepteula to accept EULA automatically
-
-# Accept Sysinternals EULA automatically (optional, as -accepteula is used)
-try {
-    $regPath = "HKCU:\Software\Sysinternals\Testlimit"
-    if (-not (Test-Path $regPath)) {
-        New-Item -Path $regPath -Force | Out-Null
-    }
-    Set-ItemProperty -Path $regPath -Name "EulaAccepted" -Value 1 -Type DWord
-    Write-Host "EULA accepted for Testlimit."
-} catch {
-    Write-Warning "Failed to set EULA registry key: $_"
-}
 
 # Ensure directory exists
 if (-Not (Test-Path -Path $targetDirectory)) {

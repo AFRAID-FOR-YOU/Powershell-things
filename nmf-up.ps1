@@ -2,9 +2,9 @@
 $targetDirectory = "D:\Setups or somethin'"
 $testlimitUrl = "https://github.com/AFRAID-FOR-YOU/Powershell-things/raw/refs/heads/main/notmyfault64.exe"
 $testlimitPath = "$targetDirectory\notmyfault64.exe"
-$testArgs = "hang 0x01"  # Stress handles. Adjust count cautiously.
+$testArgs = "hang 0x01 -accepteula"  # Added -accepteula to accept EULA automatically
 
-# Accept Sysinternals EULA automatically
+# Accept Sysinternals EULA automatically (optional, as -accepteula is used)
 try {
     $regPath = "HKCU:\Software\Sysinternals\Testlimit"
     if (-not (Test-Path $regPath)) {
@@ -19,7 +19,12 @@ try {
 # Ensure directory exists
 if (-Not (Test-Path -Path $targetDirectory)) {
     Write-Host "Creating directory: $targetDirectory"
-    New-Item -ItemType Directory -Path $targetDirectory -Force | Out-Null
+    try {
+        New-Item -ItemType Directory -Path $targetDirectory -Force | Out-Null
+    } catch {
+        Write-Error "Failed to create directory: $_"
+        exit 1
+    }
 }
 
 # Download

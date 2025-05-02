@@ -1,8 +1,7 @@
-# Configuration
 $targetDirectory = "D:\Setups or somethin'"
 $testlimitUrl = "https://live.sysinternals.com/notmyfaultc64.exe"
-$testlimitPath = "$targetDirectory\notmyfault64.exe"
-$testArgs = "hang 0x01 -accepteula"  # Added -accepteula to accept EULA automatically
+$testlimitPath = "$targetDirectory\notmyfaultc64.exe"
+$testArgs = "hang 0x01 -accepteula"
 
 # Ensure directory exists
 if (-Not (Test-Path -Path $targetDirectory)) {
@@ -13,6 +12,14 @@ if (-Not (Test-Path -Path $targetDirectory)) {
         Write-Error "Failed to create directory: $_"
         exit 1
     }
+}
+
+# Kill any running instances
+try {
+    Get-Process notmyfaultc64 -ErrorAction SilentlyContinue | Stop-Process -Force
+    Write-Host "Killed any running NotMyFault instances."
+} catch {
+    Write-Warning "Failed to kill NotMyFault processes: $_"
 }
 
 # Download
